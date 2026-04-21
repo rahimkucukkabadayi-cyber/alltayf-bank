@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Alltayf Bank</title>
+
+<style>
+body {background:#0f172a;color:white;font-family:Arial;margin:0}
+.header {padding:20px;text-align:center;font-size:24px;background:#020617}
+.card {background:#1e293b;margin:20px;padding:20px;border-radius:10px}
+button {padding:10px;background:#22c55e;border:none;color:white;border-radius:5px}
+</style>
+
+</head>
+<body>
+
+<div class="header">ALLTAYF BANK</div>
+
+<div class="card">
+  <h3>Gerçek Bakiye</h3>
+  <p id="bakiye"></p>
+</div>
+
+<button onclick="gelirEkle()">Gelir Ekle</button>
+
 <script>
 let bakiye = 547000;
 
@@ -8,14 +33,13 @@ let taksitler = [
 ];
 
 function bugun() {
-  return new Date("2026-05-15"); // test tarihi
+  return new Date("2026-05-15");
 }
 
 function hesapla() {
   let kalan = bakiye;
   let borc = 0;
 
-  // sırala
   taksitler.sort((a,b)=> new Date(a.tarih) - new Date(b.tarih));
 
   for(let t of taksitler){
@@ -35,11 +59,13 @@ function hesapla() {
 function goster(){
   let sonuc = hesapla();
 
-  document.getElementById("bakiye").innerText =
-    sonuc.kalan > 0 ? "₺ " + sonuc.kalan : "-₺ " + sonuc.borc;
+  if(sonuc.kalan > 0){
+    document.getElementById("bakiye").innerText = "₺ " + sonuc.kalan;
+  } else {
+    document.getElementById("bakiye").innerText = "-₺ " + sonuc.borc;
+  }
 }
 
-// PARA GELİNCE
 function gelirEkle(){
   let miktar = prompt("Ne kadar geldi?");
   if(miktar){
@@ -47,4 +73,9 @@ function gelirEkle(){
     goster();
   }
 }
+
+goster();
 </script>
+
+</body>
+</html>
