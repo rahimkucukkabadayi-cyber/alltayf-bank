@@ -1,53 +1,50 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <title>Alltayf Bank</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0f172a;
-      color: white;
-    }
-    .header {
-      background: #020617;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .card {
-      background: #1e293b;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      background: #22c55e;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
+<script>
+let bakiye = 547000;
 
-<div class="header">ALLTAYF BANK</div>
+let taksitler = [
+  {tarih: "2026-04-28", tutar:125000},
+  {tarih: "2026-05-01", tutar:320000},
+  {tarih: "2026-05-10", tutar:432000}
+];
 
-<div class="card">
-  <h3>Bakiye</h3>
-  <p>₺ 10,000</p>
-  <button>Para Gönder</button>
-</div>
+function bugun() {
+  return new Date("2026-05-15"); // test tarihi
+}
 
-<div class="card">
-  <h3>Son İşlemler</h3>
-  <p>+ ₺500 (Geldi)</p>
-  <p>- ₺200 (Gitti)</p>
-</div>
+function hesapla() {
+  let kalan = bakiye;
+  let borc = 0;
 
-</body>
-</html>
+  // sırala
+  taksitler.sort((a,b)=> new Date(a.tarih) - new Date(b.tarih));
+
+  for(let t of taksitler){
+    if(new Date(t.tarih) <= bugun()){
+      if(kalan >= t.tutar){
+        kalan -= t.tutar;
+      } else {
+        borc += (t.tutar - kalan);
+        kalan = 0;
+      }
+    }
+  }
+
+  return {kalan, borc};
+}
+
+function goster(){
+  let sonuc = hesapla();
+
+  document.getElementById("bakiye").innerText =
+    sonuc.kalan > 0 ? "₺ " + sonuc.kalan : "-₺ " + sonuc.borc;
+}
+
+// PARA GELİNCE
+function gelirEkle(){
+  let miktar = prompt("Ne kadar geldi?");
+  if(miktar){
+    bakiye += Number(miktar);
+    goster();
+  }
+}
+</script>
