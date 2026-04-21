@@ -5,77 +5,165 @@
 <title>Alltayf Bank</title>
 
 <style>
-body {background:#0f172a;color:white;font-family:Arial;margin:0}
-.header {padding:20px;text-align:center;font-size:24px;background:#020617}
-.card {background:#1e293b;margin:20px;padding:20px;border-radius:10px}
-button {padding:10px;background:#22c55e;border:none;color:white;border-radius:5px}
+body {
+  margin:0;
+  font-family: Arial;
+}
+
+/* ÜST BAR */
+.topbar {
+  background:#d60000;
+  color:white;
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.menu {
+  display:flex;
+  gap:20px;
+}
+
+.menu a {
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+
+/* HEADER */
+.header {
+  background:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #ddd;
+}
+
+.logo {
+  font-size:22px;
+  font-weight:bold;
+  color:#d60000;
+}
+
+.buttons button {
+  margin-left:10px;
+  padding:10px 15px;
+  border-radius:20px;
+  border:1px solid #d60000;
+  background:white;
+  color:#d60000;
+  cursor:pointer;
+}
+
+.buttons button.red {
+  background:#d60000;
+  color:white;
+}
+
+/* SLIDER */
+.slider {
+  background:#d60000;
+  color:white;
+  display:flex;
+  padding:40px;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.slider-text {
+  max-width:50%;
+}
+
+.slider-text h1 {
+  font-size:36px;
+}
+
+.slider-text button {
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  margin-top:20px;
+  cursor:pointer;
+}
+
+.slider-image {
+  width:300px;
+  height:200px;
+  background:white;
+  border-radius:10px;
+}
+
+/* ALT KARTLAR */
+.cards {
+  display:flex;
+  gap:20px;
+  padding:20px;
+}
+
+.card {
+  flex:1;
+  background:#f5f5f5;
+  padding:20px;
+  border-radius:10px;
+}
 </style>
 
 </head>
 <body>
 
-<div class="header">ALLTAYF BANK</div>
-
-<div class="card">
-  <h3>Gerçek Bakiye</h3>
-  <p id="bakiye"></p>
+<div class="topbar">
+  <div class="menu">
+    <a href="#">Süper Şube</a>
+    <a href="#">Ticaret Yolu</a>
+  </div>
+  <div class="menu">
+    <a href="#">Kampanyalar</a>
+    <a href="#">Bankamız</a>
+  </div>
 </div>
 
-<button onclick="gelirEkle()">Gelir Ekle</button>
+<div class="header">
+  <div class="logo">ALLTAYF BANK</div>
 
-<script>
-let bakiye = 547000;
+  <div class="menu">
+    <a href="#">Bireysel</a>
+    <a href="#">Ticari</a>
+    <a href="#">Kurumsal</a>
+  </div>
 
-let taksitler = [
-  {tarih: "2026-04-28", tutar:125000},
-  {tarih: "2026-05-01", tutar:320000},
-  {tarih: "2026-05-10", tutar:432000}
-];
+  <div class="buttons">
+    <button>İnternet Şubesi</button>
+    <button class="red">Müşteri Ol</button>
+  </div>
+</div>
 
-function bugun() {
-  return new Date("2026-05-15");
-}
+<div class="slider">
+  <div class="slider-text">
+    <h1>BİRLİKTE DAHA FAZLASINI BAŞARACAĞIZ</h1>
+    <button>Detaylı Bilgi</button>
+  </div>
 
-function hesapla() {
-  let kalan = bakiye;
-  let borc = 0;
+  <div class="slider-image"></div>
+</div>
 
-  taksitler.sort((a,b)=> new Date(a.tarih) - new Date(b.tarih));
+<div class="cards">
+  <div class="card">
+    <h3>Bireysel Bankacılık</h3>
+    <p>Hesap, kredi, kart işlemleri</p>
+  </div>
 
-  for(let t of taksitler){
-    if(new Date(t.tarih) <= bugun()){
-      if(kalan >= t.tutar){
-        kalan -= t.tutar;
-      } else {
-        borc += (t.tutar - kalan);
-        kalan = 0;
-      }
-    }
-  }
+  <div class="card">
+    <h3>Ticari Bankacılık</h3>
+    <p>İşletmeler için çözümler</p>
+  </div>
 
-  return {kalan, borc};
-}
-
-function goster(){
-  let sonuc = hesapla();
-
-  if(sonuc.kalan > 0){
-    document.getElementById("bakiye").innerText = "₺ " + sonuc.kalan;
-  } else {
-    document.getElementById("bakiye").innerText = "-₺ " + sonuc.borc;
-  }
-}
-
-function gelirEkle(){
-  let miktar = prompt("Ne kadar geldi?");
-  if(miktar){
-    bakiye += Number(miktar);
-    goster();
-  }
-}
-
-goster();
-</script>
+  <div class="card">
+    <h3>Dijital Bankacılık</h3>
+    <p>Mobil ve internet işlemleri</p>
+  </div>
+</div>
 
 </body>
 </html>
